@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Tickets{% endblock %}</h1>
+  <a class="action" href="{{ url_for('project_viewer') }}">Back to projects</a>
+  <a class="action" href="{{ url_for('ticket_viewer.create_ticket', project_name=project_name) }}">New Ticket</a>
+{% endblock %}
+
+{% block content %}
+  {% for ticket in project_tickets %}
+    <article class="ticket">
+      <header>
+            <div>
+              <h1><a href="{{ url_for('ticket_viewer.view_ticket', project_name=project_name, ticket_name=ticket['TicketName']) }}">{{ ticket['TicketName'] }}</a></h1>
+            </div>
+      </header>
+      <p class="TicketType">Type: {{ ticket['TicketType'] }}</p>
+      <p class="TicketStatus">Status: {{ ticket['TicketStatus'] }}</p>
+      <p class="Priority">Priority: {{ ticket['Priority'] }}</p>
+      <p class="TicketTimestamp">Created on: {{ ticket['TicketTimestamp'].strftime('%Y-%m-%d') }}</div>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

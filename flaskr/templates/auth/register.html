@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!--Tells jinja this template should replace blocks from
+the base template.-->
+{% extends 'base.html'%}
+{% block header %}
+    <h1>{% block title %}Register{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <label for="username">Username</label>
+        <input name="username" id="username" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+        <label type="institution">Institution</label>
+        <input type="institution" name="institution" id="institution" required>
+        <label type="institutional_email">Institutional Email</label>
+        <input type="institutional_email" name="institutional_email" id="institutional_email" required>
+        <label type="full_name">Full Name</label>
+        <input type="full_name" name="full_name" id="full_name" required>
+        <input type="submit" value="Register">
+    </form>
+{% endblock %}
+

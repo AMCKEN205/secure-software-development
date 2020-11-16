@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block header %}
+  <h1>{% block title %}{{ selected_ticket["TicketName"] }}{% endblock %}</h1>
+  <a href="{{ url_for('ticket_viewer.ticket_index', project_name=project_name) }}"> Back to project view </a>
+{% endblock %}
+
+{% block content %}
+    <h3 class="BugDescriptionTitle">Ticket Description</h3>
+    <p class="BugDescription"> {{ selected_ticket["BugDescription"] }}</p>
+    <hr>
+    <p class="TicketType">Ticket Type: {{ selected_ticket["TicketType"] }}</p>
+
+    <p class="TicketStatus">Ticket Status: {{selected_ticket["TicketStatus"] }}</p>
+
+    <p class="Priority">Ticket Priority: {{selected_ticket["Priority"] }}</p>
+
+    <hr>
+    <h3 class="assigned_to">Assigned to: {{ user_assigned_username }}</h3>
+
+    <p class="created_by">Created by: <b>{{ creator_username }}</b></p>
+    <p class="created_on">Created on: <b>{{ selected_ticket["TicketTimestamp"].strftime('%d-%m-%y %-I:%M %p') }}</b></p>
+    <hr>
+    <h3>Ticket Comments</h3>
+    <hr>
+    {% for ticket_comment in ticket_comments %}
+    <p><b> User: {{ ticket_comment["CommenterUsername"] }} </b></p>
+    <p><b>Title: {{ ticket_comment["CommentTitle"] }}</b></p>
+    <p>{{ ticket_comment["CommentText"] }}</p>
+    <p>posted on: {{ticket_comment["CommentTimestamp"].strftime('%d-%m-%y %-I:%M %p')}}</p>
+      {% if not loop.last %}
+        <hr>
+      {% endif %}
+    {% endfor %}
+    <hr>
+    <form method="post">
+            <label for="comment_title">Comment Title</label>
+            <input name="comment_title" id="comment_title" value="{{ request.form['comment_title'] }}" required>
+            <label for="ticket_comment">Ticket Comment</label>
+            <textarea name="ticket_comment" id="ticket_comment" required>{{ request.form['ticket_comment'] }}</textarea>
+            <input type="submit" value="Submit Comment">
+    </form>
+{% endblock %}

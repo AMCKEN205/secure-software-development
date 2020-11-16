@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Projects{% endblock %}</h1>
+  <a class="action" href="{{ url_for('project_viewer.create_project') }}">New</a>
+{% endblock %}
+
+{% block content %}
+  {% for project in projects %}
+    <article class="project">
+      <header>
+            <div>
+              <h1><a href="{{ url_for('ticket_viewer.ticket_index', project_name=project['ProjectName']) }}">{{ project['ProjectName'] }}</a></h1> 
+                <div class="ProjectDescription">Description: {{ project['ProjectDescription'] }} </div>
+            </div>
+      </header>
+      <p class="about">created on {{ project['ProjectCreationTimestamp'].strftime('%Y-%m-%d') }}</p>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

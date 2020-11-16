@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block header %}
+  <h1>{% block title %}New Ticket{% endblock %}</h1>
+  <a href="{{ url_for('ticket_viewer.ticket_index', project_name=project_name) }}"> Back to project view </a>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="ticket_name">Ticket Name</label>
+    <input name="ticket_name" id="ticket_name" value="{{ request.form['ticket_name'] }}" required>
+    
+    <label for="user_assigned_uname">Assignee Username</label>
+    <input name="user_assigned_uname" id="user_assigned_uname" value="{{ request.form['user_assigned_uname'] }}" required>
+    
+    <label for="bug_description">Ticket Description</label>
+    <textarea name="bug_description" id="bug_description" required>{{ request.form['bug_description'] }}</textarea>
+    
+    <label for="ticket_type">Ticket Type</label>
+    <select name="ticket_type" id="ticket_type" required value="{{ request.form['ticket_type'] }}"> .
+      {% for type in ticket_type_options %}
+        <option value="{{ type }}">{{type}}</option>
+      {% endfor %}
+    </select>
+    <hr>
+    <label for="priority">Ticket Priority</label>
+    <select name="priority" id="priority" required value="{{ request.form['priority'] }}"> .
+      {% for priority in ticket_priority_options %}
+        <option value="{{ priority }}">{{priority}}</option>
+      {% endfor %}
+    </select>
+    <hr>
+    <label for="ticket_status">Ticket Status</label>
+    <select name="ticket_status" id="ticket_status" required value="{{ request.form['ticket_status'] }}"> .
+      {% for status in ticket_status_options %}
+        <option value="{{ status }}">{{status}}</option>
+      {% endfor %}
+    </select>
+    <hr>
+    <input type="submit" value="Submit">
+  </form>
+{% endblock %}

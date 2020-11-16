@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!-- changes the title displayed in the browser tab and window title.-->
+<title>Bug Tracker</title>
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+<link rel="icon" href="https://image.flaticon.com/icons/png/512/78/78946.png">
+
+<nav>
+    <h1>Bug Tracker</h1>
+    <ul>
+        {% if g.user %}
+            <!-- g automatically loaded into jinja template documents--> 
+            <!-- We check if the user is set, if so a logout link is displayed.
+            Otherwise register and login links are displayed -->
+            <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+        {% else %}
+            <li><a href="{{ url_for('auth.register') }}"> Register </a></li>
+            <li><a href="{{ url_for('auth.login') }}"> Log In </a></li>
+        {% endif %}
+    </ul>
+</nav>
+<section class="content">
+    <header>
+        <!-- Changes the title displayed on each page. -->
+        {% block header %}{% endblock %}
+    </header>
+    {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+    {% endfor %}
+    <!-- Where the content for each page goes. 
+        (e.g. login or ticket entry forms.)-->
+    {% block content %}{% endblock %}
+</section>
